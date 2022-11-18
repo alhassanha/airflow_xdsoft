@@ -27,7 +27,7 @@ from requests.exceptions import ChunkedEncodingError
 
 from docker import APIClient, tls
 from docker.errors import APIError
-from docker.types import Mount
+from docker.types import Mount, DeviceRequest
 
 from airflow.exceptions import AirflowException
 from airflow.models import BaseOperator
@@ -152,6 +152,8 @@ class DockerOperator(BaseOperator):
     :type retrieve_output: bool
     :param retrieve_output_path: path for output file that will be retrieved and passed to xcom
     :type retrieve_output_path: Optional[str]
+    :param device_requests: Expose host resources such as GPUs to the container.
+    :type device_requests: DeviceRequest
     """
 
     template_fields = ('command', 'environment', 'container_name')
@@ -198,6 +200,7 @@ class DockerOperator(BaseOperator):
         extra_hosts: Optional[Dict[str, str]] = None,
         retrieve_output: bool = False,
         retrieve_output_path: Optional[str] = None,
+        device_requests: Union[list[DeviceRequest], None] = None,
         **kwargs,
     ) -> None:
         super().__init__(**kwargs)
@@ -241,6 +244,7 @@ class DockerOperator(BaseOperator):
         self.container = None
         self.retrieve_output = retrieve_output
         self.retrieve_output_path = retrieve_output_path
+        self.device_requests = device_requests
 
     def get_hook(self) -> DockerHook:
         """
@@ -299,6 +303,7 @@ class DockerOperator(BaseOperator):
                 cap_add=self.cap_add,
                 extra_hosts=self.extra_hosts,
                 privileged=self.privileged,
+                device_requests=self.device_requests,
             ),
             image=self.image,
             user=self.user,
