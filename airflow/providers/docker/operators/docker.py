@@ -23,6 +23,8 @@ import tarfile
 from tempfile import TemporaryDirectory
 from typing import Dict, Iterable, List, Optional, Union
 
+from requests.exceptions import ChunkedEncodingError
+
 from docker import APIClient, tls
 from docker.errors import APIError
 from docker.types import Mount
@@ -307,18 +309,30 @@ class DockerOperator(BaseOperator):
         lines = self.cli.attach(container=self.container['Id'], stdout=True, stderr=True, stream=True)
         try:
             self.cli.start(self.container['Id'])
+            while True:
+                line = ''
+                res_lines = []
+                return_value = None
+                for line in lines:
+                    if hasattr(line, 'decode'):
+                        # Note that lines returned can also be byte sequences so we have to handle decode here
+                        line = line.decode('utf-8')
+                    line = line.strip()
+                    res_lines.append(line)
+                    self.log.info(line)
+                try:
+                    result = self.cli.wait(self.container['Id'])
+                    break
+                except ChunkedEncodingError as ch_err:
+                    chunk_enc_err, = ch_err.args
+                    self.log.info(str(chunk_enc_err))
+                    if str(
+                        chunk_enc_err) == "(\"Connection broken: InvalidChunkLength(got length b'', 0 bytes read)\", InvalidChunkLength(got length b'', 0 bytes read))":
+                        self.log.info("empty log stream")
+                        lines = self.cli.attach(container=self.container['Id'], stdout=True, stderr=True, stream=True)
+                    else:
+                        raise ch_err
 
-            line = ''
-            res_lines = []
-            return_value = None
-            for line in lines:
-                if hasattr(line, 'decode'):
-                    # Note that lines returned can also be byte sequences so we have to handle decode here
-                    line = line.decode('utf-8')
-                line = line.strip()
-                res_lines.append(line)
-                self.log.info(line)
-            result = self.cli.wait(self.container['Id'])
             if result['StatusCode'] != 0:
                 res_lines = "\n".join(res_lines)
                 raise AirflowException('docker container failed: ' + repr(result) + f"lines {res_lines}")
