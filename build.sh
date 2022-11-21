@@ -14,4 +14,4 @@ docker build . \
     --build-arg ADDITIONAL_AIRFLOW_EXTRAS="slack,jdbc" \
     --build-arg ADDITIONAL_DEV_APT_DEPS="gcc g++" \
     --build-arg ADDITIONAL_RUNTIME_APT_DEPS="default-jre-headless" \
-    --tag "airflow_xdsoft:0.0.9"
+    --tag "airflow_xdsoft:0.0.11"
