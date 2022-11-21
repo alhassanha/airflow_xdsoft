@@ -200,7 +200,7 @@ class DockerOperator(BaseOperator):
         extra_hosts: Optional[Dict[str, str]] = None,
         retrieve_output: bool = False,
         retrieve_output_path: Optional[str] = None,
-        device_requests: Union[list[DeviceRequest], None] = None,
+        device_requests: Union[List[DeviceRequest], None] = None,
         **kwargs,
     ) -> None:
         super().__init__(**kwargs)
