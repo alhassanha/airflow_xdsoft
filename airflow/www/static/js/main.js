@@ -157,7 +157,7 @@ function initializeUITimezone() {
   if (Airflow.serverTimezone !== local) {
     $('#timezone-local a')
       .attr('data-timezone', local)
-      .html(`${formatTimezone(local)} <span class="label label-info">Local</span>`);
+      .html(`${formatTimezone(local)} <span class="label label-info">Местное</span>`);
   } else {
     $('#timezone-local').hide();
   }

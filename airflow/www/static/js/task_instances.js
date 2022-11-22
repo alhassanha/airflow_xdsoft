@@ -27,12 +27,12 @@ import { dagTZ } from './dag';
 function makeDateTimeHTML(start, end) {
   // check task ended or not
   const isEnded = end && end instanceof moment && end.isValid();
-  return `Started: ${start.format(defaultFormat)}<br>Ended: ${isEnded ? end.format(defaultFormat) : 'Not ended yet'}<br>`;
+  return `Начало: ${start.format(defaultFormat)}<br>Конец: ${isEnded ? end.format(defaultFormat) : 'Ещё не завершилось'}<br>`;
 }
 
 function generateTooltipDateTimes(startTime, endTime, dagTimezone) {
   if (!startTime) {
-    return '<br><em>Not yet started</em>';
+    return '<br><em>Ещё не началось</em>';
   }
 
   const tzFormat = 'z (Z)';
@@ -67,7 +67,7 @@ function generateTooltipDateTimes(startTime, endTime, dagTimezone) {
 export default function tiTooltip(ti, { includeTryNumber = false } = {}) {
   let tt = '';
   if (ti.state !== undefined) {
-    tt += `<strong>Status:</strong> ${escapeHtml(ti.state)}<br><br>`;
+    tt += `<strong>Статус:</strong> ${escapeHtml(ti.state)}<br><br>`;
   }
   if (ti.task_id !== undefined) {
     tt += `Task_id: ${escapeHtml(ti.task_id)}<br>`;
@@ -90,14 +90,14 @@ export default function tiTooltip(ti, { includeTryNumber = false } = {}) {
     ti.duration = moment(endDate).diff(startDate, 'second');
   }
 
-  tt += `Duration: ${escapeHtml(convertSecsToHumanReadable(ti.duration))}<br>`;
+  tt += `Длительность: ${escapeHtml(convertSecsToHumanReadable(ti.duration))}<br>`;
 
   const intervalStart = ti.data_interval_start;
   const intervalEnd = ti.data_interval_end;
   if (intervalStart && intervalEnd) {
     tt += '<br><strong>Data Interval:</strong><br>';
-    tt += `Start: ${formatDateTime(intervalStart)}<br>`;
-    tt += `End: ${formatDateTime(intervalEnd)}<br>`;
+    tt += `Начало: ${formatDateTime(intervalStart)}<br>`;
+    tt += `Конец: ${formatDateTime(intervalEnd)}<br>`;
   }
 
   if (includeTryNumber) {
@@ -116,7 +116,7 @@ export function taskNoInstanceTooltip(taskId, task) {
   if (task.task_type !== undefined) {
     tt += `Operator: ${escapeHtml(task.task_type)}<br>`;
   }
-  tt += '<br><em>DAG has yet to run.</em>';
+  tt += '<br><em>Орграф ещё не запущен.</em>';
   return tt;
 }
 
