@@ -77,17 +77,17 @@ export default function tiTooltip(ti, { includeTryNumber = false } = {}) {
     tt += `Run Id: <nobr>${escapeHtml(ti.run_id)}</nobr><br>`;
   }
   if (ti.operator !== undefined) {
-    tt += `Operator: ${escapeHtml(ti.operator)}<br>`;
+    tt += `Оператор: ${escapeHtml(ti.operator)}<br>`;
   }
 
   // Calculate duration on the fly if task instance is still running
   if (ti.state === 'running') {
     const startDate = ti.start_date instanceof moment ? ti.start_date : moment(ti.start_date);
-    ti.duration = moment().diff(startDate, 'second');
+    ti.duration = moment().diff(startDate, 'секунд');
   } else if (!ti.duration && ti.end_date) {
     const startDate = ti.start_date instanceof moment ? ti.start_date : moment(ti.start_date);
     const endDate = ti.end_date instanceof moment ? ti.end_date : moment(ti.end_date);
-    ti.duration = moment(endDate).diff(startDate, 'second');
+    ti.duration = moment(endDate).diff(startDate, 'секунд');
   }
 
   tt += `Длительность: ${escapeHtml(convertSecsToHumanReadable(ti.duration))}<br>`;
@@ -95,7 +95,7 @@ export default function tiTooltip(ti, { includeTryNumber = false } = {}) {
   const intervalStart = ti.data_interval_start;
   const intervalEnd = ti.data_interval_end;
   if (intervalStart && intervalEnd) {
-    tt += '<br><strong>Data Interval:</strong><br>';
+    tt += '<br><strong>Временной интервал:</strong><br>';
     tt += `Начало: ${formatDateTime(intervalStart)}<br>`;
     tt += `Конец: ${formatDateTime(intervalEnd)}<br>`;
   }
@@ -114,7 +114,7 @@ export function taskNoInstanceTooltip(taskId, task) {
     tt += `Task_id: ${escapeHtml(taskId)}<br>`;
   }
   if (task.task_type !== undefined) {
-    tt += `Operator: ${escapeHtml(task.task_type)}<br>`;
+    tt += `Оператор: ${escapeHtml(task.task_type)}<br>`;
   }
   tt += '<br><em>Орграф ещё не запущен.</em>';
   return tt;

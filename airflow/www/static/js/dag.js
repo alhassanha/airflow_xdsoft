@@ -282,8 +282,8 @@ $('#next-run').on('mouseover', () => {
     if (nextRun.createAfter) newTitle += `<strong>Run After:</strong> ${formatDateTime(nextRun.createAfter)}<br><br>`;
     if (nextRun.intervalStart && nextRun.intervalEnd) {
       newTitle += '<strong>Data Interval</strong><br>';
-      newTitle += `Start: ${formatDateTime(nextRun.intervalStart)}<br>`;
-      newTitle += `End: ${formatDateTime(nextRun.intervalEnd)}`;
+      newTitle += `Начало: ${formatDateTime(nextRun.intervalStart)}<br>`;
+      newTitle += `Конец: ${formatDateTime(nextRun.intervalEnd)}`;
     }
     return newTitle;
   });
