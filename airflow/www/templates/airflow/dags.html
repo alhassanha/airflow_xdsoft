@@ -83,9 +83,9 @@
       <div class="row dags-table-header">
         <div class="col-md-4">
           <div class="form-group btn-group">
-            <a href="{{ url_for('Airflow.index', status='all', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'all' else 'btn-default'}}" title="Show active and paused DAGs">All <span class="badge">{{ "{:,}".format(status_count_all) }}</span></a>
-            <a href="{{ url_for('Airflow.index', status='active', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'active' else 'btn-default'}}" title="Show only active DAGs">Active <span class="badge">{{ "{:,}".format(status_count_active) }}</span></a>
-            <a href="{{ url_for('Airflow.index', status='paused', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'paused' else 'btn-default'}}" title="Show only paused DAGs">Paused <span class="badge">{{ "{:,}".format(status_count_paused) }}</span></a>
+            <a href="{{ url_for('Airflow.index', status='all', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'all' else 'btn-default'}}" title="Показать активные и приостановленные Орграфы">All <span class="badge">{{ "{:,}".format(status_count_all) }}</span></a>
+            <a href="{{ url_for('Airflow.index', status='active', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'active' else 'btn-default'}}" title="Показать только активные Орграфы">Active <span class="badge">{{ "{:,}".format(status_count_active) }}</span></a>
+            <a href="{{ url_for('Airflow.index', status='paused', search=request.args.get('search', None), tags=request.args.getlist('tags', None)) }}" class="btn {{'btn-primary' if status_filter == 'paused' else 'btn-default'}}" title="Показать только приостановленные Орграфы">Paused <span class="badge">{{ "{:,}".format(status_count_paused) }}</span></a>
           </div>
         </div>
         <div class="col-sm-6 col-md-3">
@@ -119,22 +119,22 @@
           <thead>
             <tr>
               <th width="12">
-                <span class="material-icons text-muted js-tooltip" title="Use this toggle to pause/unpause a DAG. The scheduler won't schedule new tasks instances for a paused DAG. Tasks already running at pause time won't be affected.">info</span>
+                <span class="material-icons text-muted js-tooltip" title="Используйте этот переключатель чтобы приостановить/возобновить Орграф. Планировщик не будет планировать новые экземплярв задач для приостановленного Орграфа. Уже запущенные задачи не будут остановлены.">info</span>
               </th>
               <th>DAG</th>
               <th>Owner</th>
               <th>Runs
-                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Status of all previous DAG runs.">info</span>
+                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Состояние всех предыдущих запусков Орграфов.">info</span>
               </th>
               <th>Schedule</th>
               <th style="width:180px;">Last Run
-                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Date/Time of the latest Dag Run.">info</span>
+                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Дата/время последнего запуска Орграфа.">info</span>
               </th>
               <th style="width:180px;">Next Run
-                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Expected Date/Time of the next Dag Run.">info</span>
+                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Ожидаемая дата/время для следующего запуска Орграфа.">info</span>
               </th>
               <th>Recent Tasks
-                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Status of tasks from all active DAG runs or, if not currently active, from most recent run.">info</span>
+                <span class="material-icons text-muted js-tooltip" aria-hidden="true" title="Статус задач по всем активным Орграфам.Если нет активных сейчас - то статус по последней активности.">info</span>
               </th>
               <th class="text-center" style="width:110px;">Actions</th>
               <th style="width:52px;">Links</th>

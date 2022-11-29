@@ -77,14 +77,14 @@ function autoTailingLog(tryNumber, metadata = null, autoTailing = false) {
   ).then((res) => {
     // Stop recursive call to backend when error occurs.
     if (!res) {
-      document.getElementById(`loading-${tryNumber}`).style.display = 'none';
+      document.getElementById(`загружаем-${tryNumber}`).style.display = 'none';
       return;
     }
     // res.error is a boolean
     // res.message is the log itself or the error message
     if (res.error) {
       if (res.message) {
-        console.error(`Error while retrieving log: ${res.message}`);
+        console.error(`Ошибка при получении лога: ${res.message}`);
       }
       document.getElementById(`loading-${tryNumber}`).style.display = 'none';
       return;
